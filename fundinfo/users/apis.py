@@ -5,27 +5,12 @@ from rest_framework import serializers
 
 from django.core.validators import MinLengthValidator
 from .validators import number_validator, special_char_validator, letter_validator
-from fundinfo.users.models import BaseUser , Profile
+from fundinfo.users.models import BaseUser
 from fundinfo.api.mixins import ApiAuthMixin
-from fundinfo.users.selectors import get_profile
 from fundinfo.users.services import register 
 from rest_framework_simplejwt.tokens import AccessToken, RefreshToken
 
 from drf_spectacular.utils import extend_schema
-
-
-class ProfileApi(ApiAuthMixin, APIView):
-
-    class OutPutSerializer(serializers.ModelSerializer):
-        class Meta:
-            model = Profile 
-            fields = ("bio", "posts_count", "subscriber_count", "subscription_count")
-
-    @extend_schema(responses=OutPutSerializer)
-    def get(self, request):
-        query = get_profile(user=request.user)
-        return Response(self.OutPutSerializer(query, context={"request":request}).data)
-
 
 class RegisterApi(APIView):
 
@@ -38,7 +23,7 @@ class RegisterApi(APIView):
                         number_validator,
                         letter_validator,
                         special_char_validator,
-                        MinLengthValidator(limit_value=10)
+                        MinLengthValidator(limit_value=6)
                     ]
                 )
         confirm_password = serializers.CharField(max_length=255)
