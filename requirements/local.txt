@@ -1,0 +1,19 @@
+-r base.txt
+
+pytest
+pytest-django
+
+factory-boy
+Faker
+
+flake8
+
+ipdb
+ipython
+
+mypy
+django-stubs
+djangorestframework-stubs
+boto3-stubs
+drf-spectacular
+django-redis
