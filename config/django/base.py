@@ -14,10 +14,10 @@ ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['*'])
 
 # Application definition
 LOCAL_APPS = [
-    'fundinfo.core.apps.CoreConfig',
     'fundinfo.common.apps.CommonConfig',
     'fundinfo.users.apps.UsersConfig',
     'fundinfo.authentication.apps.AuthenticationConfig',
+    'fundinfo.core.apps.CoreConfig',
 ]
 
 THIRD_PARTY_APPS = [
