@@ -2,7 +2,7 @@ from django.db import models
 from fundinfo.common.models import BaseModel
 from django.utils.text import slugify
 import uuid
-from users.models import BaseUser
+from fundinfo.users.models import BaseUser
 
 class Base(BaseModel):
     uuid = models.UUIDField(unique=True, default=uuid.uuid4)
