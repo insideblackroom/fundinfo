@@ -7,6 +7,7 @@ from drf_spectacular.views import (
     SpectacularRedocView,
     SpectacularSwaggerView,
 )
+from django.conf import settings
 
 urlpatterns = [
     path("schema/", SpectacularAPIView.as_view(api_version="v1"), name="schema"),
@@ -14,4 +15,8 @@ urlpatterns = [
     path("redoc/", SpectacularRedocView.as_view(url_name="schema"), name="redoc"),
     path('admin/', admin.site.urls),
     path('api/', include(('fundinfo.api.urls', 'api'))),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    path('core/', include(('fundinfo.core.urls', 'core'))),
+]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

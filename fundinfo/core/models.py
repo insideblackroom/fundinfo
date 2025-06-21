@@ -24,14 +24,15 @@ class Product(Base):
     #         )
     name = models.CharField(max_length=255)
     slug = models.SlugField()
-    description = models.TextField()
+    description = models.TextField(null=True, blank=True, default="")
     price = models.IntegerField(default=0)
     discount = models.FloatField(default=0)
     enabled = models.BooleanField(default=True)
     # status = models.IntegerField(max_length=10, choices=STATUS_CHOICES, default=STATUS_ENABLED) 
     category = models.ForeignKey('Category', on_delete=models.PROTECT, related_name='products')
-    old_category = models.ForeignKey('Category', on_delete=models.PROTECT, related_name='old_producs')
-
+    # old_category = models.ForeignKey('Category', on_delete=models.PROTECT, related_name='old_producs')
+    image = models.ImageField(upload_to='covers/')
+    
     def __str__(self):
         return f"{self.name}"
 
@@ -39,7 +40,7 @@ class Category(Base):
     name = models.CharField(max_length=255)
     # product_set => products
     # old_products
-    parent = models.ForeignKey('Category', on_delete=models.PROTECT, null=True, default=None, related_name='childs')
+    parent = models.ForeignKey('Category', on_delete=models.PROTECT, null=True, blank=True, default=None, related_name='childs')
 
     def __str__(self):
         return f"{self.name}"
