@@ -1,14 +1,16 @@
 from django.db import models
 from fundinfo.common.models import BaseModel
 from django.utils.text import slugify
+from django.contrib.auth import get_user_model
 import uuid
-from fundinfo.users.models import BaseUser
+
+User = get_user_model()
 
 class Base(BaseModel):
     uuid = models.UUIDField(unique=True, default=uuid.uuid4)
     deleted = models.BooleanField(default=False)
     delete_data = models.DateTimeField(default=None, null=True, blank=True)
-    user = models.ForeignKey(BaseUser, on_delete=models.PROTECT)
+    user = models.ForeignKey(User, on_delete=models.PROTECT)
     
     class Meta:
         abstract = True
