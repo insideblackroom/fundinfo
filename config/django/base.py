@@ -28,6 +28,7 @@ THIRD_PARTY_APPS = [
     'corsheaders',
     'drf_spectacular',
     'django_extensions',
+    'phonenumber_field'
 ]
 
 INSTALLED_APPS = [
@@ -164,6 +165,13 @@ CACHE_TTL = 60 * 15
 APP_DOMAIN = env("APP_DOMAIN", default="http://localhost:8000")
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+LOGIN_REDIRECT_URL = 'core:product_list'
+LOGOUT_REDIRECT_URL = 'core:product_list'
+
+PHONENUMBER_DEFAULT_FORMAT = 'NATIONAL'
+PHONENUMBER_DEFAULT_REGION = "IR"
+PHONENUMBER_DB_FORMAT = "NATIONAL"
 
 from config.settings.cors import *  # noqa
 from config.settings.jwt import *  # noqa
