@@ -1,47 +1,34 @@
 {% extends 'core.html' %}
 
 {% block title %}<title>Core Products</title>{% endblock %}
-{% block products_page %}
-    <section class="py-5 text-center container">
-        <div class="row py-lg-5">
-            <div class="col-lg-6 col-md-8 mx-auto">
-                <h1 class="fw-light">{% lorem 1 w random %}</h1>
-                <p class="lead text-body-secondary">{% lorem 1 b %}</p>
-                <p>
-                    <a href="#" class="btn btn-primary my-2">Sign-in</a>
-                    <a href="#" class="btn btn-secondary my-2">Sign-up</a>
-                </p>
-            </div>
-        </div>
-    </section>
-    <div class="album py-5 bg-body-tertiary">
-        <div class="container">
-            <h4>Total Products: {{ products|length }}</h4>
-            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-                {% for product in products %}
-                <div class="col-md-4">
-                    <div class="card mb-4 box-shadow">
-                        {% if product.image %}
-                            <img class="card-img-top" src="{{ product.image.url }}"">
+{% block content %}
+<h4>Total Products: {{ products|length }}</h4>
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+    {% for product in products %}
+    <div class="col-md-4">
+        <div class="card mb-4 box-shadow">
+            {% if product.image %}
+            <img class="card-img-top" src="{{ product.image.url }}"">
                         {% else %}
-                            <img class=" card-img-top" data-src="holder.js/100px225?theme=thumb&bg=5559c&fg=eceeef&text=Thumbnail">
-                        {% endif %}
-                        <div class="card-body">
-                            <b>{{ product.name }}</b></br>
-                            <b>Price:</b>{{ product.price }} &dollar;</br>
-                            <p class="card-text">{{ product.description }}</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="btn-group"> <button type="button"
-                                        class="btn btn-sm btn-outline-secondary">Detail</button> <button type="button"
-                                        class="btn btn-sm btn-outline-secondary">Add To Cart</button> </div>
-                                <small class="text-body-secondary">{% if product.discount %}{{ product.discount | floatformat }} %{% else %}{% endif %}
-                                </small>
-                            </div>
-                        </div>
-                    </div>
+                            <img class=" card-img-top"
+                data-src="holder.js/100px225?theme=thumb&bg=5559c&fg=eceeef&text=Thumbnail">
+            {% endif %}
+            <div class="card-body">
+                <b>{{ product.name }}</b></br>
+                <b>Price:</b>{{ product.price }} &dollar;</br>
+                <p class="card-text">{{ product.description }}</p>
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group"> <button type="button"
+                            class="btn btn-sm btn-outline-secondary">Detail</button> <button type="button"
+                            class="btn btn-sm btn-outline-secondary">Add To Cart</button> </div>
+                    <small class="text-body-secondary">{% if product.discount %}{{ product.discount | floatformat }} %{%
+                        else %}{% endif %}
+                    </small>
                 </div>
-                {% endfor %}
             </div>
         </div>
     </div>
+    {% endfor %}
+</div>
+</div>
 {% endblock %}

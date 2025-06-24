@@ -26,6 +26,17 @@
                 aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
+            <div style="color: white; margin-right: 30px;">
+                {% if user.is_authenticated %}
+                    {{ user.username }}
+                    <form method="post" action="{% url 'auth:logout' %}">
+                        <input class="btn" type="submit" value="logout">
+                        {% csrf_token %}
+                    </form>
+                {% else %} 
+                    <a class="btn" href="{% url 'auth:login' %}">Login</a>
+                {% endif %}
+            </div>
         </div>
     </div>
 </header>

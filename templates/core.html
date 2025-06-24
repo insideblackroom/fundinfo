@@ -16,7 +16,25 @@
         {% include 'assets/header.html' %}
         {% block body %}
             <main>
-                {% block products_page %}No Content Provided{% endblock %}
+                <section class="py-5 text-center container">
+                    <div class="row py-lg-5">
+                        <div class="col-lg-6 col-md-8 mx-auto">
+                            {% block first_section %}
+                                <h1 class="fw-light">{% lorem 1 w random %}</h1>
+                                <p class="lead text-body-secondary">{% lorem 1 b %}</p>
+                                <p>
+                                    <a href="#" class="btn btn-primary my-2">Sign-in</a>
+                                    <a href="#" class="btn btn-secondary my-2">Sign-up</a>
+                                </p>
+                            {% endblock %}
+                        </div>
+                    </div>
+                </section>
+                <div class="album py-5 bg-body-tertiary">
+                    <div class="container">
+                        {% block content %}No Content Provided{% endblock %}
+                    </div>
+                </div>
             </main>
         {% endblock %}
     </body>
