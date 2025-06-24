@@ -8,6 +8,7 @@ from drf_spectacular.views import (
     SpectacularSwaggerView,
 )
 from django.conf import settings
+from fundinfo.users import views
 
 urlpatterns = [
     path("schema/", SpectacularAPIView.as_view(api_version="v1"), name="schema"),
@@ -16,6 +17,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(('fundinfo.api.urls', 'api'))),
     path('core/', include(('fundinfo.core.urls', 'core'))),
+    path('core/auth/', include(('django.contrib.auth.urls', 'auth'))),
+    path('core/auth/signup/', views.SignUpView.as_view(), name='signup'),
 ]
 
 if settings.DEBUG:
