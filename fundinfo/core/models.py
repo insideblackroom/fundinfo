@@ -2,9 +2,20 @@ from django.db import models
 from fundinfo.common.models import BaseModel
 from django.utils.text import slugify
 from django.contrib.auth import get_user_model
+# timezone aware
+from django.utils import timezone
 import uuid
+import os
 
 User = get_user_model()
+
+def _get_upload_path(obj, filename):
+    now = timezone.now()
+    base_path = "pic"
+    file_name = uuid.uuid5(uuid.NAMESPACE_URL, obj.pk)
+    ext = os.path.splitext(filename)[1]
+    path = os.path.join(base_path, now.strftime("%Y/%m"), f"{file_name}.{ext}")
+    return path
 
 class Base(BaseModel):
     uuid = models.UUIDField(unique=True, default=uuid.uuid4)
@@ -33,7 +44,7 @@ class Product(Base):
     # status = models.IntegerField(max_length=10, choices=STATUS_CHOICES, default=STATUS_ENABLED) 
     category = models.ForeignKey('Category', on_delete=models.PROTECT, related_name='products')
     # old_category = models.ForeignKey('Category', on_delete=models.PROTECT, related_name='old_producs')
-    image = models.ImageField(upload_to='covers/')
+    image = models.ImageField(upload_to=_get_upload_path)
     
     def __str__(self):
         return f"{self.name}"
