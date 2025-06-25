@@ -22,10 +22,12 @@
                             {% block first_section %}
                                 <h1 class="fw-light">{% lorem 1 w random %}</h1>
                                 <p class="lead text-body-secondary">{% lorem 1 b %}</p>
-                                <p>
-                                    <a href="#" class="btn btn-primary my-2">Sign-in</a>
-                                    <a href="#" class="btn btn-secondary my-2">Sign-up</a>
-                                </p>
+                                {% if not user.is_authenticated %}
+                                    <p>
+                                        <a href="{% url 'auth:login' %}" class="btn btn-primary my-2">Sign-in</a>
+                                        <a href="{% url 'signup' %}" class="btn btn-secondary my-2">Sign-up</a>
+                                    </p>
+                                {% endif %}
                             {% endblock %}
                         </div>
                     </div>

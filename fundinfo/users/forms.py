@@ -6,7 +6,8 @@ from django.utils.html import format_html
 from phonenumber_field.formfields import PhoneNumberField
 from .models import BaseUser
 from .selectors import exist_user
-
+from .services import register
+forms.ModelForm
 class SignUpForm(forms.Form):
 
     error_message = {
@@ -65,7 +66,10 @@ class SignUpForm(forms.Form):
         password_validation.validate_password(password2)
         return cleaned_data
 
-    def save(self, commit=True):
+    def save(self):
         email = self.cleaned_data['email']
         password = self.cleaned_data['password']
-        pass
+        user = register(bio=None, email=email, password=password)
+        user.is_active = False
+        user.save()
+        return user

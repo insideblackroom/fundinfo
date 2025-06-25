@@ -11,5 +11,6 @@ class SignUpView(View):
         form = forms.SignUpForm(request.POST)
         if form.is_valid():
             cd = form.cleaned_data
+            form.save()
             return render(request, "users/signup_done.html", {"user_email": cd['email']})
         return render(request, "users/signup.html", {'form': form})
