@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.conf import settings
-from django.urls import path, include
+from django.urls import re_path, include
 from django.conf.urls.static import static
 from drf_spectacular.views import (
     SpectacularAPIView,
@@ -16,9 +16,9 @@ urlpatterns = [
     path("redoc/", SpectacularRedocView.as_view(url_name="schema"), name="redoc"),
     path('admin/', admin.site.urls),
     path('api/', include(('fundinfo.api.urls', 'api'))),
-    path('core/', include(('fundinfo.core.urls', 'core'))),
-    path('core/auth/', include(('django.contrib.auth.urls', 'auth'))),
-    path('core/auth/signup/', views.SignUpView.as_view(), name='signup'),
+    re_path(r'^core/', include(('fundinfo.core.urls', 'core'))),
+    re_path(r'^core/auth/', include(('django.contrib.auth.urls', 'auth'))),
+    re_path(r'^core/auth/signup/', views.SignUpView.as_view(), name='signup'),
 ]
 
 if settings.DEBUG:
