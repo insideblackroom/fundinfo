@@ -180,4 +180,4 @@ from config.settings.sessions import *  # noqa
 from config.settings.celery import *  # noqa
 from config.settings.swagger import *  # noqa
 #from config.settings.sentry import *  # noqa
-#from config.settings.email_sending import *  # noqa
+from config.settings.email_sending import *  # noqa
