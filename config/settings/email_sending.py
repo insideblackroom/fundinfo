@@ -8,6 +8,7 @@ EMAIL_SENDING_STRATEGY = env_to_enum(
     env("EMAIL_SENDING_STRATEGY", default="local")
 )
 
+# this is for chaos engineering and for testing purpose and apllication recovering (random failure)
 EMAIL_SENDING_FAILURE_TRIGGER = env.bool("EMAIL_SENDING_FAILURE_TRIGGER", default=False)
 EMAIL_SENDING_FAILURE_RATE = env.float("EMAIL_SENDING_FAILURE_RATE", default=0.2)
 
