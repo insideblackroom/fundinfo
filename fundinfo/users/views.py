@@ -44,7 +44,7 @@ class SignUpActivateView(View):
     def get(self, request, uid, token):
         id = force_str(urlsafe_base64_decode(uid))
         user = exist_user_id(id=id)
-        if not user:
+        if not user or user.is_active:
             return render(request, 'users/activate_error.html')
         if token_generator.check_token(user, token):
             user, _ = model_update(instance=user, fields=['is_active'], data={"is_active": True})

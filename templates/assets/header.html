@@ -27,6 +27,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div style="color: white; margin-right: 30px;">
+                <span id="cart"><a href="{% url 'core:cart' %}">Cart(<span id="cart-count">{{ request.session.cart|length }}</span>)</a></span>
                 {% if user.is_authenticated %}
                     {{ user.username }}
                     <form method="post" action="{% url 'auth:logout' %}">

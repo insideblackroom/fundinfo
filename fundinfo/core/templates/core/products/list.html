@@ -18,9 +18,10 @@
                 <b>Price:</b>{{ product.price }} &dollar;</br>
                 <p class="card-text">{{ product.description }}</p>
                 <div class="d-flex justify-content-between align-items-center">
-                    <div class="btn-group"> <button type="button"
-                            class="btn btn-sm btn-outline-secondary">Detail</button> <button type="button"
-                            class="btn btn-sm btn-outline-secondary">Add To Cart</button> </div>
+                    <div class="btn-group"> 
+                        <button type="button" class="btn btn-sm btn-outline-secondary">Detail</button>
+                        <a href="{% url 'core:cart_add' product.id %}"><button type="button" class="btn btn-sm btn-outline-secondary">Add To Cart</button></a> 
+                    </div>
                     <small class="text-body-secondary">{% if product.discount %}{{ product.discount | floatformat }} %{% else %}{% endif %}
                     </small>
                 </div>
