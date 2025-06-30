@@ -1,6 +1,7 @@
 {% extends 'core.html' %}
 
-{% block title %}<title>Core Products</title>{% endblock %}
+{% block title %}Core Products{% endblock %}
+
 {% block content %}
 <h4>Total Products: {{ products|length }}</h4>
 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
@@ -9,9 +10,8 @@
         <div class="card mb-4 box-shadow">
             {% if product.image %}
             <img class="card-img-top" src="{{ product.image.url }}"">
-                        {% else %}
-                            <img class=" card-img-top"
-                data-src="holder.js/100px225?theme=thumb&bg=5559c&fg=eceeef&text=Thumbnail">
+            {% else %}
+            <img class=" card-img-top" data-src="holder.js/100px225?theme=thumb&bg=5559c&fg=eceeef&text=Thumbnail">
             {% endif %}
             <div class="card-body">
                 <b>{{ product.name }}</b></br>
@@ -20,7 +20,9 @@
                 <div class="d-flex justify-content-between align-items-center">
                     <div class="btn-group"> 
                         <button type="button" class="btn btn-sm btn-outline-secondary">Detail</button>
-                        <a href="{% url 'core:cart_add' product.id %}"><button type="button" class="btn btn-sm btn-outline-secondary">Add To Cart</button></a> 
+                        <a href="{% url 'core:cart_append' product.id %}">
+                            <button type="button" class="btn btn-sm btn-outline-secondary">Add To Cart</button>
+                        </a> 
                     </div>
                     <small class="text-body-secondary">{% if product.discount %}{{ product.discount | floatformat }} %{% else %}{% endif %}
                     </small>

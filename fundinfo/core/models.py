@@ -1,6 +1,7 @@
 from django.db import models
 from fundinfo.common.models import BaseModel
 from django.utils.text import slugify
+from django.urls import reverse
 from django.contrib.auth import get_user_model
 # timezone aware
 from django.utils import timezone
@@ -46,6 +47,9 @@ class Product(Base):
     # old_category = models.ForeignKey('Category', on_delete=models.PROTECT, related_name='old_producs')
     image = models.ImageField(upload_to=_get_upload_path)
     
+    def get_absolute_url(self):
+        return reverse('core:product_detail', args=[self.id])
+
     def __str__(self):
         return f"{self.name}"
 
