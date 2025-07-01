@@ -13,7 +13,7 @@ User = get_user_model()
 def _get_upload_path(obj, filename):
     now = timezone.now()
     base_path = "pic"
-    file_name = uuid.uuid5(uuid.NAMESPACE_URL, obj.pk)
+    file_name = uuid.uuid5(uuid.NAMESPACE_URL, str(obj.pk))
     ext = os.path.splitext(filename)[1]
     path = os.path.join(base_path, now.strftime("%Y/%m"), f"{file_name}.{ext}")
     return path

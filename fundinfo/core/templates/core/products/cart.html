@@ -58,6 +58,6 @@
     </table>
     <p class="map-text">
         <a href="{% url 'core:product_list' %}" class="button light">Continue Shopping</a>
-        <a href="#" class="button">Checkout</a>
+        <a href="{% url 'invoices:checkout' %}" class="button">Checkout</a>
     </p>
 {% endblock %}

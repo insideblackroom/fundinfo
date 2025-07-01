@@ -19,6 +19,7 @@ LOCAL_APPS = [
     'fundinfo.authentication.apps.AuthenticationConfig',
     'fundinfo.core.apps.CoreConfig',
     'fundinfo.emails.apps.EmailsConfig',
+    'fundinfo.invoices.apps.InvoicesConfig',
 ]
 
 THIRD_PARTY_APPS = [

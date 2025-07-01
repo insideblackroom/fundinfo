@@ -19,7 +19,8 @@ urlpatterns = [
     re_path(r'^core/', include(('fundinfo.core.urls', 'core'))),
     re_path(r'^core/auth/', include(('django.contrib.auth.urls', 'auth'))),
     re_path(r'^core/auth/signup/', users_views.SignUpView.as_view(), name='signup'),
-    path("core/auth/activate/<uid>/<token>/", users_views.SignUpActivateView.as_view(), name="activate")
+    path("core/auth/activate/<uid>/<token>/", users_views.SignUpActivateView.as_view(), name="activate"),
+    path('core/invoice', include('fundinfo.invoices.urls', namespace='invoices')),
 ]
 
 if settings.DEBUG:

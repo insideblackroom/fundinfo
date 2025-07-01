@@ -1,0 +1,54 @@
+{% extends 'core.html' %}
+{% load static %}
+
+{% block title %}Invoice{% endblock %}
+
+{% block first_section %}
+    <h2>Submit your invoice</h2>
+{% endblock %}
+
+{% block content %}
+    <table class="cart">
+        <thead>
+        <tr>
+            <th>Image</th>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Unit Price</th>
+            <th>Price</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for item in cart %}
+            {% with product=item.product %}
+                <tr>
+                    <td>
+                        <a href="{{ product.get_absolute_url }}">
+                            {% if product.image %}
+                                <img class="card-img-top" src="{{ product.image.url }}"">
+                            {% else %}
+                                <img class=" card-img-top" data-src="holder.js/100px225?theme=thumb&bg=5559c&fg=eceeef&text=Thumbnail">
+                            {% endif %}
+                        </a>
+                    </td>
+                    <td>{{ product.name }}</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>${{ item.price }}</td>
+                    <td>${{ item.total_price }}</td>
+                </tr>
+            {% endwith %}
+        {% endfor %}
+        <tr class="total">
+            <td>Total</td>
+            <td class="state_number">${{ cart.get_total_price }}</td>
+        </tr>
+        </tbody>
+    </table>
+    <form method="post" action="#">
+        {% csrf_token %}
+        <table>
+            {{ form }}
+        </table>
+        <input type="submit" class="btn btn-primary" value="Pay">
+    </form>
+{% endblock %}
