@@ -6,7 +6,8 @@ from django.urls import reverse
 from django.utils.encoding import force_str, force_bytes
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
-from fundinfo.emails.services import email_send
+from django.db import transaction
+from .tasks import user_signup_email_send
 from fundinfo.emails.models import Email
 from fundinfo.emails.services import email_create
 from fundinfo.common.services import model_update
@@ -36,7 +37,7 @@ class SignUpView(View):
             to = user.email
             html = render_to_string('users/signup_email.html', {'link': link_generator(request, user)})
             email = email_create(subject=subject, to=to, html=html, status=Email.Status.READY)
-            email_send(email)
+            transaction.on_commit(lambda: user_signup_email_send.delay(email.id))
             return render(request, "users/signup_done.html", {"email": to})
         return render(request, "users/signup.html", {'form': form})
 

@@ -25,7 +25,10 @@ services:
       - "5050:80"
 
   rabbitmq:
-    image: "rabbitmq"
+    image: "rabbitmq:3.13.7-management-alpine"
+    ports:
+      - 15672:15672
+      - 5672:5672
     container_name: rabbitmq
     healthcheck:
       test: rabbitmq-diagnostics -q ping

@@ -38,3 +38,8 @@ docker compose -f docker-compose.dev.yml up -d
 ```
 python manage.py runserver
 ```
+
+7- run celery task to send activation email
+```
+celery -A config worker -l info --without-gossip --without-mingle --without-heartbeat
+```
