@@ -44,7 +44,7 @@
         </tr>
         </tbody>
     </table>
-    <form method="post" action="#">
+    <form method="post" action="{% url 'invoices:checkout' %}">
         {% csrf_token %}
         <table>
             {{ form }}
