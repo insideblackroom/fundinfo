@@ -21,6 +21,7 @@ LOCAL_APPS = [
     'fundinfo.emails.apps.EmailsConfig',
     'fundinfo.invoices.apps.InvoicesConfig',
     'fundinfo.payment.apps.PaymentConfig',
+    'fundinfo.zarinpalgateway.apps.ZarinpalgatewayConfig',
 ]
 
 THIRD_PARTY_APPS = [
