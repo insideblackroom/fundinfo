@@ -13,7 +13,8 @@ class Payment(BaseModel):
     total = models.IntegerField()
     ref = models.CharField(max_length=255)
     descrption = models.TextField()
-
     authority = models.CharField(max_length=255)
+    user_ip = models.CharField(max_length=15)
+    
     def __str__(self):
         return f"payment id: {self.id}"
