@@ -1,6 +1,7 @@
 from fundinfo.common.models import BaseModel
 from django.db import models
 from fundinfo.users.models import BaseUser
+from fundinfo.core.models import Product
 
 class Invoice(BaseModel):
     invoice_number = models.IntegerField(null=True, blank=True)
@@ -22,3 +23,13 @@ class Invoice(BaseModel):
             models.Index(fields=['invoice_number']),
             models.Index(fields=['total']),
         ]
+
+class InvoiceItem(BaseModel):
+    invoice = models.ForeignKey(Invoice, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.PROTECT)
+    name = models.CharField(max_length=255)
+    count = models.IntegerField()
+    price = models.IntegerField()
+    discount = models.FloatField()
+    total = models.IntegerField()
+    
