@@ -10,6 +10,8 @@ from django.urls import reverse
 from django.shortcuts import redirect
 from decimal import Decimal
 import requests as rq
+from fundinfo.zarinpalgateway.zarinpal import Zarinpal
+from django.conf import settings
 
 class CheckoutView(View):
     def get(self, request):
@@ -51,6 +53,12 @@ class CheckoutView(View):
             payment.descrption = "خرید از سایت"
             payment.user_ip = get_user_ip(request)
 
-            # TODO: Redirect to gateway
-
+            zarinpal = Zarinpal(**settings.GATEWAY_CONFIG)
+            zarinpal.set_amount(payment.total)
+            callback_url = "http://"+str(get_current_site(request))+reverse("payment:verify")
+            zarinpal.set_callback_url(callback_url)
+    
+            gateway = zarinpal.init_gateway()
+            
+            return zarinpal.redirect_gateway()
         return render(request, 'invoices/checkout/checkout.html', {'form': form})
