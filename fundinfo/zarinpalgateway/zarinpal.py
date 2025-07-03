@@ -23,7 +23,7 @@ class Zarinpal:
             self._payment_type = "sandbox"
         self._payment_url = f"https://{self._payment_type}.zarinpal.com/pg/v4/payment/request.json"
         self._startpay_url = f"https://{self._payment_type}.zarinpal.com/pg/StartPay/"
-        self._verify_url = f"https://{self._payment_type}.zaripal.com/pg/v4/payment/verify.json"
+        self._verify_url = f"https://{self._payment_type}.zarinpal.com/pg/v4/payment/verify.json"
 
     def set_settings(self):
         for item in ("MERCHANT_CODE", "SANDBOX"):
@@ -32,7 +32,7 @@ class Zarinpal:
             setattr(self, f"_{item.lower()}", self.kwargs_settings[item])
      
     def set_amount(self, amount):
-        if amount < 0:
+        if int(amount) < 0:
             raise AmountNotValidException()
         self.__amount = int(amount)
 
@@ -129,14 +129,12 @@ class Zarinpal:
         self.__gateway.status = GateWay.STATUS.RETURN_FROM_BANK
         self.__gateway.save()
         self.verify()
+        return self.__gateway.status
 
     def get_record_for_verify(self):
         try:
             self.__gateway = GateWay.objects.get(
-                Q(
-                    Q(ref_id=self._get_ref_id()) 
-                    | Q(payment_local_key=self._get_payment_local_key())
-                )
+                Q(ref_id=self._get_ref_id())
             )
         except GateWay.DoesNotExist:
             raise GateWayStateInvalid(
