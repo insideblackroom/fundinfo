@@ -129,7 +129,7 @@ class Zarinpal:
         self.__gateway.status = GateWay.STATUS.RETURN_FROM_BANK
         self.__gateway.save()
         self.verify()
-        return self.__gateway.status
+        return self.__gateway.status, self._get_ref_id()
 
     def get_record_for_verify(self):
         try:

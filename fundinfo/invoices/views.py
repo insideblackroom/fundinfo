@@ -59,6 +59,7 @@ class CheckoutView(View):
             zarinpal.set_callback_url(callback_url)
     
             gateway = zarinpal.init_gateway()
-            
+            payment.authority = gateway.ref_id
+            payment.save() 
             return zarinpal.redirect_gateway()
         return render(request, 'invoices/checkout/checkout.html', {'form': form})
