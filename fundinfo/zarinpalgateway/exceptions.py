@@ -9,3 +9,6 @@ class GateWayConnectionError(ZarinpalException):
 
 class GateWayRejectPayment(ZarinpalException):
     """Gateway Reject Payment"""
+
+class GateWayStateInvalid(ZarinpalException):
+    """GateWay State not valid"""

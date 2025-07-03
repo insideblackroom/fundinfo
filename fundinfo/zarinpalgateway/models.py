@@ -5,6 +5,7 @@ class GateWay(BaseModel):
     class STATUS(models.TextChoices):
         WAITING = "WAITING", "Waiting"
         REDIRECT_TO_BANK = "REDIRECT_TO_BANK", "Redirect to bank"
+        RETURN_FROM_BANK = "RETURN_FROM_BANK", "Return from bank"
         VERIFIED = "VERIFIED", "Verified"
         PAID = "PAID", "Paid"
         IN_BANK = "IN_BANK", "In_Bank"

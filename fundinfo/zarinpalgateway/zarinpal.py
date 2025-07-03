@@ -1,13 +1,15 @@
 from .exceptions import(
     AmountNotValidException,
     GateWayConnectionError,
-    GateWayRejectPayment
+    GateWayRejectPayment,
+    GateWayStateInvalid
 )
 from uuid import uuid4
 from .models import GateWay
 from django.shortcuts import redirect
 import requests
 import json
+from django.db.models import Q
 
 class Zarinpal:
     _merchant_code = None
@@ -120,3 +122,41 @@ class Zarinpal:
 
     def get_gateway_pay_url(self):
         return f"{self._startpay_url}{self._get_ref_id()}"
+
+    def verify_from_gateway(self, request):
+        self._set_ref_id(request.GET.get("Authority"))
+        self.get_record_for_verify()
+        self.__gateway.status = GateWay.STATUS.RETURN_FROM_BANK
+        self.__gateway.save()
+        self.verify()
+
+    def get_record_for_verify(self):
+        try:
+            self.__gateway = GateWay.objects.get(
+                Q(
+                    Q(ref_id=self._get_ref_id()) 
+                    | Q(payment_local_key=self._get_payment_local_key())
+                )
+            )
+        except GateWay.DoesNotExist:
+            raise GateWayStateInvalid(
+                f"reference number not valid {self._get_ref_id()}"
+            )
+        self._set_payment_local_key(self.__gateway.payment_local_key)
+        self._set_ref_id(self.__gateway.ref_id)
+        self.set_amount(self.__gateway.amount)
+
+    def build_verify_data(self):
+        return {
+            "merchant_id": self._merchant_code,
+            "authority": self._get_ref_id(),
+            "amount": self.get_amount()
+        }
+
+    def verify(self):
+        data = self.build_verify_data()
+        result =self._send_data(self._verify_url, data)
+        if result['data'] and result['data']['code'] in [100 ,101]:
+            self.__gateway.status = GateWay.STATUS.VERIFIED
+        else:
+            self.__gateway.status = GateWay.STATUS.FAILED
