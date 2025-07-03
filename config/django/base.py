@@ -178,6 +178,11 @@ PHONENUMBER_DEFAULT_FORMAT = 'RFC3966'
 PHONENUMBER_DEFAULT_REGION = "IR"
 PHONENUMBER_DB_FORMAT = "RFC3966"
 
+GATEWAY_CONFIG = {
+    "MERCHANT_CODE": "271db24a-999d-4a64-b438-52c9914bccec",
+    "SANDBOX": 1
+}
+
 from config.settings.cors import *  # noqa
 from config.settings.jwt import *  # noqa
 from config.settings.sessions import *  # noqa
